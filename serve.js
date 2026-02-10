@@ -4,6 +4,12 @@ var path = require("path");
 var app = express();
 var ROOT = __dirname;
 
+app.set("trust proxy", 1);
+
+app.get("/", function (req, res) {
+  res.status(200).send("OK");
+});
+
 app.use(function (req, res, next) {
   if (req.path.indexOf("/backend") === 0) return res.status(404).send("Not found");
   next();
@@ -23,9 +29,7 @@ app.use(function (req, res, next) {
   res.status(404).send("Not found");
 });
 
-const PORT = process.env.PORT || 8080;
-app.set("trust proxy", 1);
-
-app.listen(PORT, "0.0.0.0", () => {
+var PORT = process.env.PORT || 8080;
+var server = app.listen(PORT, "0.0.0.0", function () {
   console.log("Server running on port", PORT);
 });
