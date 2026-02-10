@@ -6,7 +6,7 @@ var ROOT = __dirname;
 
 app.set("trust proxy", 1);
 
-app.get("/", function (req, res) {
+app.get("/health", function (req, res) {
   res.status(200).send("OK");
 });
 
