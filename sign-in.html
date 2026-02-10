@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In - klingmotionai</title>
+  <link rel="stylesheet" href="styles.css?v=2">
+</head>
+<body class="auth-page">
+  <div class="auth-page-wrap">
+    <div class="auth-card">
+      <a href="/" class="auth-card-logo">
+        <img src="klingmotionai_logo.png" alt="KlingMotionAI" class="auth-card-logo-img">
+        <span class="auth-card-logo-name">KlingMotionAI</span>
+      </a>
+      <h1 class="auth-card-title">Welcome back to KlingMotionAI</h1>
+      <button type="button" class="auth-google-btn">
+        <img src="https://i.postimg.cc/ZqbtygXF/1770598829500.png" alt="" class="auth-google-icon">
+        Sign in with Google
+      </button>
+      <div class="auth-divider">
+        <span class="auth-divider-text">OR</span>
+      </div>
+      <form class="auth-form" action="#" method="post" novalidate>
+        <label class="auth-label">
+          <span class="auth-label-text">Email</span>
+          <input type="email" class="auth-input" name="email" placeholder="you@example.com" autocomplete="email">
+        </label>
+        <label class="auth-label">
+          <span class="auth-label-text">Password</span>
+          <div class="auth-password-wrap">
+            <input type="password" class="auth-input auth-input-password" name="password" placeholder="••••••••" autocomplete="current-password">
+            <button type="button" class="auth-password-toggle" aria-label="Toggle password visibility">
+              <span class="auth-password-toggle-icon auth-password-show" aria-hidden="true"></span>
+              <span class="auth-password-toggle-icon auth-password-hide" aria-hidden="true" hidden></span>
+            </button>
+          </div>
+        </label>
+        <button type="submit" class="auth-submit-btn">Sign In</button>
+      </form>
+      <p class="auth-footer">
+        <a href="/sign-up" class="auth-footer-link">Sign up for free</a>
+      </p>
+    </div>
+  </div>
+  <script src="auth.js"></script>
+</body>
+</html>
