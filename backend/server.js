@@ -324,8 +324,9 @@ const server = app.listen(PORT, "0.0.0.0", function () {
 server.on("error", function (err) {
   if (err.code === "EADDRINUSE") {
     console.error("Port " + PORT + " is already in use. Stop the other process or set PORT in .env.");
+    process.exit(1);
   }
-  throw err;
+  console.error("[server] server error:", err.message);
 });
 
 process.on("uncaughtException", function (err) {
