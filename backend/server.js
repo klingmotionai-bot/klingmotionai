@@ -19,21 +19,19 @@ const MAX_FILE_SIZE = 100 * 1024 * 1024;
 /** When serving frontend from backend, use same origin so session cookies work. */
 const FRONTEND_ROOT = path.join(__dirname, "..");
 /**
- * Public URL of the app (same as backend when frontend is served from backend).
- * localhost: FRONTEND_URL=http://localhost:3080 (or leave unset)
- * production: FRONTEND_URL=https://klingmotionai.com
+ * Public URL of the app. Set via FRONTEND_URL or:
+ * - NODE_ENV !== "production" → http://localhost:3080
+ * - NODE_ENV === "production" → https://klingmotionai.com
  */
-const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:" + PORT;
-const IS_PRODUCTION = process.env.NODE_ENV === "production" || (FRONTEND_URL && FRONTEND_URL.startsWith("https"));
+const FRONTEND_URL = process.env.FRONTEND_URL || (process.env.NODE_ENV === "production" ? "https://klingmotionai.com" : "http://localhost:" + PORT);
+const IS_PRODUCTION = process.env.NODE_ENV === "production";
 
-if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
-  console.error("Missing GOOGLE_CLIENT_ID or GOOGLE_CLIENT_SECRET in .env");
-  process.exit(1);
+var hasGoogleAuth = !!(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET);
+if (!hasGoogleAuth) {
+  console.warn("Missing GOOGLE_CLIENT_ID or GOOGLE_CLIENT_SECRET; OAuth will be disabled.");
 }
 
-if (IS_PRODUCTION) {
-  app.set("trust proxy", 1);
-}
+app.set("trust proxy", 1);
 
 app.use(
   session({
@@ -51,18 +49,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: FRONTEND_URL + "/auth/google/callback"
-    },
-    function (accessToken, refreshToken, profile, done) {
-      return done(null, profile);
-    }
-  )
-);
 passport.serializeUser(function (user, done) {
   done(null, user);
 });
@@ -89,9 +75,32 @@ app.use(
   })
 );
 
-app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
+app.get("/health", function (req, res) {
+  res.status(200).send("OK");
+});
+
+if (hasGoogleAuth) {
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: FRONTEND_URL + "/auth/google/callback"
+      },
+      function (accessToken, refreshToken, profile, done) {
+        return done(null, profile);
+      }
+    )
+  );
+}
+
+app.get("/auth/google", function (req, res, next) {
+  if (!hasGoogleAuth) return res.status(503).send("OAuth not configured");
+  return passport.authenticate("google", { scope: ["profile", "email"] })(req, res, next);
+});
 
 app.get("/auth/google/callback", function (req, res, next) {
+  if (!hasGoogleAuth) return res.status(503).send("OAuth not configured");
   passport.authenticate("google", function (err, profile, info) {
     if (err) return next(err);
     if (!profile) {
@@ -295,7 +304,7 @@ app.use(function (err, req, res, next) {
   res.status(400).json({ success: false, error: err.message || "Upload failed" });
 });
 
-const server = app.listen(PORT, function () {
+const server = app.listen(PORT, "0.0.0.0", function () {
   console.log("Backend running on " + FRONTEND_URL);
 });
 server.on("error", function (err) {
