@@ -1,15 +1,22 @@
 console.log("[server] starting...");
+process.on("uncaughtException", function (err) {
+  console.error("[server] uncaughtException:", err.message);
+  console.error(err.stack);
+});
+process.on("unhandledRejection", function (reason, p) {
+  console.error("[server] unhandledRejection:", reason);
+});
 const path = require("path");
+const fs = require("fs");
+const crypto = require("crypto");
 require("dotenv").config({ path: path.join(__dirname, ".env") });
+console.log("[server] env loaded");
 const express = require("express");
 const cors = require("cors");
 const session = require("express-session");
-const FileStore = require("session-file-store")(session);
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const multer = require("multer");
-const fs = require("fs");
-const crypto = require("crypto");
 
 const app = express();
 
@@ -50,15 +57,7 @@ var sessionOpts = {
     sameSite: "lax"
   }
 };
-if (IS_PRODUCTION) {
-  var sessionsDir = path.join(__dirname, ".sessions");
-  try {
-    fs.mkdirSync(sessionsDir, { recursive: true });
-  } catch (e) {
-    console.warn("[server] session dir mkdir:", e.message);
-  }
-  sessionOpts.store = new FileStore({ path: sessionsDir, ttl: 86400 });
-}
+console.log("[server] session configured (memory store)");
 app.use(session(sessionOpts));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -318,6 +317,7 @@ app.use(function (err, req, res, next) {
   res.status(400).json({ success: false, error: err.message || "Upload failed" });
 });
 
+console.log("[server] binding to port " + PORT + "...");
 const server = app.listen(PORT, "0.0.0.0", function () {
   console.log("Backend running on " + FRONTEND_URL + " (port " + PORT + ")");
 });
@@ -329,10 +329,6 @@ server.on("error", function (err) {
   console.error("[server] server error:", err.message);
 });
 
-process.on("uncaughtException", function (err) {
-  console.error("[server] uncaughtException:", err.message);
-  console.error(err.stack);
-});
-process.on("unhandledRejection", function (reason, p) {
-  console.error("[server] unhandledRejection:", reason);
+process.on("beforeExit", function (code) {
+  console.error("[server] beforeExit code=" + code);
 });
