@@ -4,6 +4,7 @@ require("dotenv").config({ path: path.join(__dirname, ".env") });
 const express = require("express");
 const cors = require("cors");
 const session = require("express-session");
+const FileStore = require("session-file-store")(session);
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const multer = require("multer");
@@ -38,19 +39,27 @@ if (!hasGoogleAuth) {
 
 app.set("trust proxy", 1);
 
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || "klingmotionai-dev-secret",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      httpOnly: true,
-      secure: IS_PRODUCTION,
-      maxAge: 24 * 60 * 60 * 1000,
-      sameSite: "lax"
-    }
-  })
-);
+var sessionOpts = {
+  secret: process.env.SESSION_SECRET || "klingmotionai-dev-secret",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    secure: IS_PRODUCTION,
+    maxAge: 24 * 60 * 60 * 1000,
+    sameSite: "lax"
+  }
+};
+if (IS_PRODUCTION) {
+  var sessionsDir = path.join(__dirname, ".sessions");
+  try {
+    fs.mkdirSync(sessionsDir, { recursive: true });
+  } catch (e) {
+    console.warn("[server] session dir mkdir:", e.message);
+  }
+  sessionOpts.store = new FileStore({ path: sessionsDir, ttl: 86400 });
+}
+app.use(session(sessionOpts));
 app.use(passport.initialize());
 app.use(passport.session());
 

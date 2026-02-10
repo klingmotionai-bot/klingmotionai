@@ -1,5 +1,6 @@
+# Use npm install so lock file doesn't have to be in sync (avoids "Missing: cors, dotenv, express-session" on Railway)
 [phases.install]
-cmds = ["npm install"]
+cmds = ["npm install --no-audit --no-fund"]
 
 [phases.build]
 cmds = []
