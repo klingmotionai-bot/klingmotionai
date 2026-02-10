@@ -1,6 +1,7 @@
 {
   "name": "klingmotionai",
   "private": true,
+  "engines": { "node": ">=18" },
   "scripts": {
     "start": "node backend/server.js",
     "dev": "node backend/server.js",

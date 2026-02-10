@@ -1,3 +1,4 @@
+console.log("[server] starting...");
 const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, ".env") });
 const express = require("express");
@@ -19,12 +20,16 @@ const MAX_FILE_SIZE = 100 * 1024 * 1024;
 /** When serving frontend from backend, use same origin so session cookies work. */
 const FRONTEND_ROOT = path.join(__dirname, "..");
 /**
- * Public URL of the app. Set via FRONTEND_URL or:
- * - NODE_ENV !== "production" → http://localhost:3080
+ * Public URL of the app. Set via FRONTEND_URL, or on Railway use RAILWAY_STATIC_URL / RAILWAY_PUBLIC_DOMAIN, or:
+ * - NODE_ENV !== "production" → http://localhost:PORT
  * - NODE_ENV === "production" → https://klingmotionai.com
  */
-const FRONTEND_URL = process.env.FRONTEND_URL || (process.env.NODE_ENV === "production" ? "https://klingmotionai.com" : "http://localhost:" + PORT);
+var FRONTEND_URL = process.env.FRONTEND_URL;
+if (!FRONTEND_URL && process.env.RAILWAY_STATIC_URL) FRONTEND_URL = process.env.RAILWAY_STATIC_URL;
+if (!FRONTEND_URL && process.env.RAILWAY_PUBLIC_DOMAIN) FRONTEND_URL = "https://" + process.env.RAILWAY_PUBLIC_DOMAIN;
+if (!FRONTEND_URL) FRONTEND_URL = process.env.NODE_ENV === "production" ? "https://klingmotionai.com" : "http://localhost:" + PORT;
 const IS_PRODUCTION = process.env.NODE_ENV === "production";
+console.log("[server] PORT=" + PORT + " FRONTEND_URL=" + FRONTEND_URL);
 
 var hasGoogleAuth = !!(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET);
 if (!hasGoogleAuth) {
@@ -305,11 +310,19 @@ app.use(function (err, req, res, next) {
 });
 
 const server = app.listen(PORT, "0.0.0.0", function () {
-  console.log("Backend running on " + FRONTEND_URL);
+  console.log("Backend running on " + FRONTEND_URL + " (port " + PORT + ")");
 });
 server.on("error", function (err) {
   if (err.code === "EADDRINUSE") {
     console.error("Port " + PORT + " is already in use. Stop the other process or set PORT in .env.");
   }
   throw err;
+});
+
+process.on("uncaughtException", function (err) {
+  console.error("[server] uncaughtException:", err.message);
+  console.error(err.stack);
+});
+process.on("unhandledRejection", function (reason, p) {
+  console.error("[server] unhandledRejection:", reason);
 });
