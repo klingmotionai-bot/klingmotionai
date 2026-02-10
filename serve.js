@@ -2,7 +2,6 @@ var express = require("express");
 var path = require("path");
 
 var app = express();
-var PORT = 5173;
 var ROOT = __dirname;
 
 app.use(function (req, res, next) {
@@ -24,6 +23,9 @@ app.use(function (req, res, next) {
   res.status(404).send("Not found");
 });
 
-app.listen(PORT, "0.0.0.0", function () {
-  console.log("READY:http://localhost:" + PORT);
+const PORT = process.env.PORT || 3000;
+app.set("trust proxy", 1);
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log("Server running on port", PORT);
 });
