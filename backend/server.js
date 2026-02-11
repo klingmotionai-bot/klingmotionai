@@ -253,7 +253,11 @@ app.use(function (req, res, next) {
 /** Serve frontend from project root so app and API are same origin; session cookies then work. */
 app.use(express.static(FRONTEND_ROOT));
 
-fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+try {
+  fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+} catch (e) {
+  console.warn("[server] upload dir mkdir failed:", e.message);
+}
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
