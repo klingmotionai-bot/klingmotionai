@@ -25,8 +25,10 @@ const offerTokens = new Map();
 const PORT = process.env.PORT || 3080;
 const UPLOAD_DIR = path.join(__dirname, "uploads");
 const MAX_FILE_SIZE = 100 * 1024 * 1024;
-/** When serving frontend from backend, use same origin so session cookies work. */
-const FRONTEND_ROOT = path.join(__dirname, "..");
+/** When serving frontend: production (e.g. Railway with root=backend) uses backend/public; else repo root (..). */
+const FRONTEND_ROOT = process.env.NODE_ENV === "production"
+  ? path.join(__dirname, "public")
+  : path.join(__dirname, "..");
 /**
  * Public URL of the app. Set via FRONTEND_URL, or on Railway use RAILWAY_STATIC_URL / RAILWAY_PUBLIC_DOMAIN, or:
  * - NODE_ENV !== "production" → http://localhost:PORT

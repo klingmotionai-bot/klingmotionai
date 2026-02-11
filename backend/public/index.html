@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>klingmotionai - Motion-Sync Video</title>
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="stylesheet" href="styles.css?v=2">
+  <!-- AdBlueMedia Content Locker (global, trigger via _Kx() on Continue) -->
+  <script type="text/javascript">
+    var IQhCu_gny_vXQLGc = {"it":4576150,"key":"33f9e"};
+  </script>
+  <script src="https://da4talg8ap14y.cloudfront.net/4b2b90e.js"></script>
+</head>
+<body>
+  <!-- Create loader overlay: direct child of body so always on top -->
+  <div id="create-loader-overlay" class="create-loader-overlay" aria-hidden="true" aria-busy="false">
+    <div class="create-loader-backdrop"></div>
+    <div class="create-loader-center">
+      <div class="loader loader-dots" aria-hidden="true" aria-live="polite">
+        <span class="loader-dot"></span>
+        <span class="loader-dot"></span>
+        <span class="loader-dot"></span>
+      </div>
+    </div>
+  </div>
+  <div class="pages-wrap">
+    <div id="page-home" class="page">
+  <header class="header">
+    <div class="header-menu-wrap">
+      <button type="button" class="header-menu" id="header-menu-btn" aria-label="Menu" aria-expanded="false" aria-haspopup="true">
+        <span class="hamburger"></span>
+      </button>
+      <div class="header-dropdown" id="header-dropdown" role="menu" aria-hidden="true">
+        <div class="header-dropdown-auth" id="signInBtn">
+          <a href="?page=signup" class="btn btn-primary header-dropdown-btn router-link">Sign up</a>
+          <a href="?page=signin" class="btn btn-primary header-dropdown-btn router-link">Log in</a>
+        </div>
+        <div class="header-dropdown-user" id="userMenuDropdown" hidden>
+          <div class="header-dropdown-user-info">
+            <div class="avatar avatar--dropdown" id="header-dropdown-avatar-wrap">
+              <img id="header-dropdown-avatar" src="" alt="" class="avatar-img" referrerpolicy="no-referrer">
+              <span id="header-dropdown-avatar-fallback" class="avatar-fallback" aria-hidden="true"></span>
+            </div>
+            <span id="header-dropdown-name" class="header-dropdown-user-name"></span>
+          </div>
+          <button type="button" class="btn btn-secondary header-dropdown-logout" id="header-logout-btn">Log out</button>
+        </div>
+        <div class="header-dropdown-divider"></div>
+        <div class="header-dropdown-tools">
+          <button type="button" class="header-dropdown-tool" role="menuitem" data-tool="omni-edit">
+            <img src="https://i.postimg.cc/Bv5gdRK0/1770575852610.png" alt="" class="header-dropdown-tool-icon kling-icon">
+            <div class="header-dropdown-tool-text">
+              <span class="header-dropdown-tool-title">Kling 3.0 Omni Edit</span>
+              <span class="header-dropdown-tool-subtitle">Edit videos with text prompts</span>
+            </div>
+          </button>
+          <button type="button" class="header-dropdown-tool" role="menuitem" data-tool="video-edit">
+            <img src="https://i.postimg.cc/Bv5gdRK0/1770575852610.png" alt="" class="header-dropdown-tool-icon kling-icon">
+            <div class="header-dropdown-tool-text">
+              <span class="header-dropdown-tool-title">Kling 01 Video Edit</span>
+              <span class="header-dropdown-tool-subtitle">Generate with elements and references</span>
+            </div>
+          </button>
+          <button type="button" class="header-dropdown-tool active" role="menuitem" data-tool="motion-control">
+            <img src="https://i.postimg.cc/Bv5gdRK0/1770575852610.png" alt="" class="header-dropdown-tool-icon kling-icon">
+            <div class="header-dropdown-tool-text">
+              <span class="header-dropdown-tool-title">Kling Motion Control</span>
+              <span class="header-dropdown-tool-subtitle">Control motion with video references</span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+    <a href="?page=home" class="header-brand router-link">
+      <img src="klingmotionai_logo.png" alt="KlingMotionAI" class="header-logo">
+      <span class="header-name">KlingMotionAI</span>
+    </a>
+    <div class="header-actions" id="signUpBtn">
+      <a href="?page=signup" class="btn btn-primary router-link">Sign up</a>
+    </div>
+    <div class="header-user" id="userMenu" hidden>
+      <div class="avatar avatar--header" id="header-user-avatar-wrap">
+        <img id="header-user-avatar" src="" alt="" class="avatar-img" referrerpolicy="no-referrer">
+        <span id="header-user-avatar-fallback" class="avatar-fallback" aria-hidden="true"></span>
+      </div>
+      <span id="header-user-name" class="header-user-name"></span>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="hero">
+      <h1 class="hero-title">Motion-Sync Video</h1>
+      <button type="button" class="btn btn-primary" id="btn-try-example">Try Example</button>
+    </section>
+
+    <div class="model-row">
+      <label class="model-label">Model</label>
+      <div class="model-selector-wrap">
+        <button type="button" class="model-trigger" id="model-trigger" aria-expanded="false" aria-haspopup="listbox" aria-label="Select model">
+          <img src="https://i.postimg.cc/Bv5gdRK0/1770575852610.png" alt="" class="model-trigger-logo kling-icon">
+          <span class="model-trigger-name">Kling Motion Control</span>
+          <span class="model-trigger-chevron" aria-hidden="true"></span>
+        </button>
+        <div class="model-dropdown" id="model-dropdown" role="listbox" aria-labelledby="model-trigger">
+          <button type="button" class="dropdown-item" role="option" data-tool="omni-edit" data-title="Kling 3.0 Omni Edit" aria-selected="false">
+            <img src="https://i.postimg.cc/Bv5gdRK0/1770575852610.png" alt="" class="dropdown-item-icon kling-icon">
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-title">Kling 3.0 Omni Edit</span>
+              <span class="dropdown-item-subtitle">Edit videos with text prompts</span>
+            </div>
+            <span class="dropdown-item-badge">Exclusive</span>
+          </button>
+          <button type="button" class="dropdown-item" role="option" data-tool="video-edit" data-title="Kling 01 Video Edit" aria-selected="false">
+            <img src="https://i.postimg.cc/Bv5gdRK0/1770575852610.png" alt="" class="dropdown-item-icon kling-icon">
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-title">Kling 01 Video Edit</span>
+              <span class="dropdown-item-subtitle">Generate with elements and references</span>
+            </div>
+          </button>
+          <button type="button" class="dropdown-item selected" role="option" data-tool="motion-control" data-title="Kling Motion Control" aria-selected="true">
+            <img src="https://i.postimg.cc/Bv5gdRK0/1770575852610.png" alt="" class="dropdown-item-icon kling-icon">
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-title">Kling Motion Control</span>
+              <span class="dropdown-item-subtitle">Control motion with video references</span>
+            </div>
+            <span class="dropdown-item-check" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <input type="file" id="input-image" accept="image/*" class="input-hidden" tabindex="-1" aria-hidden="true">
+    <input type="file" id="input-video" accept="video/*" class="input-hidden" tabindex="-1" aria-hidden="true">
+
+    <section class="card">
+      <h2 class="card-title">1. Select Your Character</h2>
+      <div class="card-content select-visual" id="select-character" role="button" tabindex="0" data-upload-state="idle">
+        <img src="https://i.postimg.cc/Gp0Bk29j/1770577384794.png" alt="Motion visual" class="select-visual-img" id="character-preview">
+        <span class="upload-success-check" id="character-success-check" aria-hidden="true" hidden></span>
+        <span class="select-visual-label" id="character-label">+ Select Motion Visual</span>
+        <div class="upload-progress-wrap" id="character-progress-wrap" aria-hidden="true" hidden>
+          <div class="upload-progress-track">
+            <div class="upload-progress-fill" id="character-progress-fill" style="width: 0%"></div>
+          </div>
+          <span class="upload-progress-pct" id="character-progress-pct">0%</span>
+        </div>
+        <span class="upload-state-msg upload-state-error" id="character-error-msg" hidden>Upload failed</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">2. Add Motion Reference</h2>
+      <div class="card-content preview-area" id="preview-area" data-upload-state="idle">
+        <span class="recording-label" id="recording-label" aria-live="polite" hidden>Recording...</span>
+        <video src="aigif.mp4" class="preview-video" id="preview-video" muted loop playsinline autoplay></video>
+        <span class="upload-success-check upload-success-check-video" id="video-success-check" aria-hidden="true" hidden></span>
+        <div class="upload-progress-wrap upload-progress-overlay" id="video-progress-wrap" aria-hidden="true" hidden>
+          <div class="upload-progress-track">
+            <div class="upload-progress-fill" id="video-progress-fill" style="width: 0%"></div>
+          </div>
+          <span class="upload-progress-pct" id="video-progress-pct">0%</span>
+        </div>
+        <span class="upload-state-msg upload-state-error" id="video-error-msg" hidden>Upload failed</span>
+      </div>
+      <div class="card-actions">
+        <button type="button" class="btn btn-secondary" id="btn-select-video">
+          <span class="btn-icon upload"></span>
+          Select Video
+        </button>
+        <button type="button" class="btn btn-secondary" id="btn-record-video">
+          <span class="btn-icon record"></span>
+          Record a Video
+        </button>
+      </div>
+    </section>
+
+    <section class="card options-card">
+      <h2 class="card-title">Keep Original Sound</h2>
+      <div class="option-toggles" data-option="sound">
+        <button type="button" class="option-btn active" data-value="yes">Yes</button>
+        <button type="button" class="option-btn" data-value="no">No</button>
+      </div>
+    </section>
+
+    <section class="card options-card">
+      <h2 class="card-title">
+        Motion Reference Control
+        <span class="info-icon" aria-label="Information"></span>
+      </h2>
+      <div class="option-toggles" data-option="motion">
+        <button type="button" class="option-btn active" data-value="exact">Exact</button>
+        <button type="button" class="option-btn" data-value="partial">Partial</button>
+      </div>
+    </section>
+
+    <section class="card options-card">
+      <h2 class="card-title">Video Mode</h2>
+      <div class="option-toggles" data-option="mode">
+        <button type="button" class="option-btn active" data-value="standard">Standard</button>
+        <button type="button" class="option-btn" data-value="pro">Pro</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Prompt (optional)</h2>
+      <textarea class="prompt-input" placeholder="Describe the environment and other details of your shot." rows="4"></textarea>
+    </section>
+
+    <div class="quality-row">
+      <label class="quality-label">Quality</label>
+      <div class="quality-selector-wrap">
+        <button type="button" class="quality-trigger" id="quality-trigger" aria-expanded="false" aria-haspopup="listbox" aria-label="Select quality">
+          <span class="quality-trigger-value" id="quality-trigger-value">720p</span>
+          <span class="quality-trigger-chevron" aria-hidden="true"></span>
+        </button>
+        <div class="quality-dropdown" id="quality-dropdown" role="listbox" aria-labelledby="quality-trigger">
+          <button type="button" class="quality-item selected" role="option" data-quality="720p" data-title="720p" data-subtitle="Balanced quality • 1 credits/sec" aria-selected="true">
+            <div class="quality-item-text">
+              <span class="quality-item-title">720p</span>
+              <span class="quality-item-subtitle">Balanced quality • 1 credits/sec</span>
+            </div>
+            <span class="quality-item-check" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="quality-item" role="option" data-quality="1080p" data-title="1080p" data-subtitle="Higher quality • 1.5 credits/sec" aria-selected="false">
+            <div class="quality-item-text">
+              <span class="quality-item-title">1080p</span>
+              <span class="quality-item-subtitle">Higher quality • 1.5 credits/sec</span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer-actions">
+      <button type="button" class="btn btn-create" id="btn-create" disabled aria-busy="false">
+        <span class="btn-create-inner">
+          <span class="btn-create-icon" id="btn-create-icon" aria-hidden="true">
+            <svg class="btn-create-spark" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <path d="M5 19l2-2M19 5l2-2M19 19l-2-2M5 5L3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.7"/>
+            </svg>
+          </span>
+          <span class="btn-create-text" id="btn-create-text">Create</span>
+        </span>
+        <span class="btn-create-burst" id="btn-create-burst" aria-hidden="true"></span>
+        <span class="btn-create-loader" id="btn-create-loader" aria-hidden="true" hidden>
+          <span class="btn-create-loader-dots">
+            <span class="btn-create-loader-dot"></span>
+            <span class="btn-create-loader-dot"></span>
+            <span class="btn-create-loader-dot"></span>
+          </span>
+        </span>
+      </button>
+      <p class="create-status-text" id="create-status-text" hidden><span class="create-status-dots"><span></span><span></span><span></span></span>Creating your video…</p>
+      <p class="credits-text"><span class="credits-icon"></span>0 credits will be charged</p>
+    </footer>
+  </main>
+
+  <div class="scroll-top" aria-hidden="true"></div>
+
+  <!-- Content Locker Modal (in-page, no redirect) -->
+  <div id="content-locker-overlay" class="content-locker-overlay" role="dialog" aria-modal="true" aria-labelledby="content-locker-title" aria-hidden="true">
+    <div class="content-locker-backdrop" id="content-locker-backdrop"></div>
+    <div class="content-locker-card">
+      <!-- Step 1: Intro -->
+      <div class="content-locker-step content-locker-step1" id="content-locker-step1">
+        <h2 id="content-locker-title" class="content-locker-title">Create Your AI Motion Control For <span class="content-locker-title-accent">Free</span></h2>
+        <p class="content-locker-text">By clicking on the button below, you will be able to create your AI Motion Control for free.</p>
+        <div class="content-locker-video-wrap">
+          <video class="content-locker-video" src="genaI_loaderloop1.webm" autoplay loop muted playsinline aria-hidden="true"></video>
+        </div>
+        <div class="content-locker-actions">
+          <button type="button" class="btn btn-primary content-locker-btn-continue" id="content-locker-continue">Continue</button>
+          <button type="button" class="btn btn-secondary content-locker-btn-cancel" id="content-locker-cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    </div>
+
+    <div id="page-signup" class="page">
+      <div class="auth-page">
+        <div class="auth-page-wrap">
+          <div class="auth-card">
+            <a href="?page=home" class="auth-card-logo router-link">
+              <img src="klingmotionai_logo.png" alt="KlingMotionAI" class="auth-card-logo-img">
+              <span class="auth-card-logo-name">KlingMotionAI</span>
+            </a>
+            <h1 class="auth-card-title">Welcome to KlingMotionAI</h1>
+            <button type="button" class="auth-google-btn">
+              <img src="https://i.postimg.cc/ZqbtygXF/1770598829500.png" alt="" class="auth-google-icon">
+              Sign in with Google
+            </button>
+            <div class="auth-divider">
+              <span class="auth-divider-text">OR</span>
+            </div>
+            <form class="auth-form" action="#" method="post" novalidate>
+              <label class="auth-label">
+                <span class="auth-label-text">Email</span>
+                <input type="email" class="auth-input" name="email" placeholder="you@example.com" autocomplete="email">
+              </label>
+              <label class="auth-label">
+                <span class="auth-label-text">Password</span>
+                <div class="auth-password-wrap">
+                  <input type="password" class="auth-input auth-input-password" name="password" placeholder="••••••••" autocomplete="new-password">
+                  <button type="button" class="auth-password-toggle" aria-label="Toggle password visibility">
+                    <span class="auth-password-toggle-icon auth-password-show" aria-hidden="true"></span>
+                    <span class="auth-password-toggle-icon auth-password-hide" aria-hidden="true" hidden></span>
+                  </button>
+                </div>
+              </label>
+              <button type="submit" class="auth-submit-btn">Sign Up</button>
+            </form>
+            <p class="auth-footer">
+              Already have an account? <a href="?page=signin" class="auth-footer-link router-link">Sign in</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="page-signin" class="page">
+      <div class="auth-page">
+        <div class="auth-page-wrap">
+          <div class="auth-card">
+            <a href="?page=home" class="auth-card-logo router-link">
+              <img src="klingmotionai_logo.png" alt="KlingMotionAI" class="auth-card-logo-img">
+              <span class="auth-card-logo-name">KlingMotionAI</span>
+            </a>
+            <h1 class="auth-card-title">Welcome back to KlingMotionAI</h1>
+            <button type="button" class="auth-google-btn">
+              <img src="https://i.postimg.cc/ZqbtygXF/1770598829500.png" alt="" class="auth-google-icon">
+              Sign in with Google
+            </button>
+            <div class="auth-divider">
+              <span class="auth-divider-text">OR</span>
+            </div>
+            <form class="auth-form" action="#" method="post" novalidate>
+              <label class="auth-label">
+                <span class="auth-label-text">Email</span>
+                <input type="email" class="auth-input" name="email" placeholder="you@example.com" autocomplete="email">
+              </label>
+              <label class="auth-label">
+                <span class="auth-label-text">Password</span>
+                <div class="auth-password-wrap">
+                  <input type="password" class="auth-input auth-input-password" name="password" placeholder="••••••••" autocomplete="current-password">
+                  <button type="button" class="auth-password-toggle" aria-label="Toggle password visibility">
+                    <span class="auth-password-toggle-icon auth-password-show" aria-hidden="true"></span>
+                    <span class="auth-password-toggle-icon auth-password-hide" aria-hidden="true" hidden></span>
+                  </button>
+                </div>
+              </label>
+              <button type="submit" class="auth-submit-btn">Sign In</button>
+            </form>
+            <p class="auth-footer">
+              <a href="?page=signup" class="auth-footer-link router-link">Sign up for free</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Auth modal: same sign up / sign in as menu pages, shown when user clicks Create without being logged in -->
+  <div id="auth-modal" class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title" aria-hidden="true">
+    <div class="auth-modal-overlay" id="auth-modal-overlay"></div>
+    <div class="auth-modal-box auth-modal-box--card">
+      <button type="button" class="auth-modal-close" id="auth-modal-close" aria-label="Close">&times;</button>
+      <div id="auth-modal-signup-panel" class="auth-modal-panel">
+        <div class="auth-card">
+          <button type="button" class="auth-card-logo auth-modal-logo" id="auth-modal-logo" aria-label="Close">
+            <img src="klingmotionai_logo.png" alt="" class="auth-card-logo-img">
+            <span class="auth-card-logo-name">KlingMotionAI</span>
+          </button>
+          <h1 class="auth-card-title">Welcome to KlingMotionAI</h1>
+          <button type="button" class="auth-google-btn">
+            <img src="https://i.postimg.cc/ZqbtygXF/1770598829500.png" alt="" class="auth-google-icon">
+            Sign in with Google
+          </button>
+          <div class="auth-divider">
+            <span class="auth-divider-text">OR</span>
+          </div>
+          <form class="auth-form" action="#" method="post" novalidate>
+            <label class="auth-label">
+              <span class="auth-label-text">Email</span>
+              <input type="email" class="auth-input" name="email" placeholder="you@example.com" autocomplete="email">
+            </label>
+            <label class="auth-label">
+              <span class="auth-label-text">Password</span>
+              <div class="auth-password-wrap">
+                <input type="password" class="auth-input auth-input-password" name="password" placeholder="••••••••" autocomplete="new-password">
+                <button type="button" class="auth-password-toggle" aria-label="Toggle password visibility">
+                  <span class="auth-password-toggle-icon auth-password-show" aria-hidden="true"></span>
+                  <span class="auth-password-toggle-icon auth-password-hide" aria-hidden="true" hidden></span>
+                </button>
+              </div>
+            </label>
+            <button type="submit" class="auth-submit-btn">Sign Up</button>
+          </form>
+          <p class="auth-footer">
+            Already have an account? <a href="#" class="auth-footer-link" id="auth-modal-switch-to-signin">Sign in</a>
+          </p>
+        </div>
+      </div>
+      <div id="auth-modal-signin-panel" class="auth-modal-panel" hidden>
+        <div class="auth-card">
+          <button type="button" class="auth-card-logo auth-modal-logo" aria-label="Close">
+            <img src="klingmotionai_logo.png" alt="" class="auth-card-logo-img">
+            <span class="auth-card-logo-name">KlingMotionAI</span>
+          </button>
+          <h1 class="auth-card-title">Welcome back to KlingMotionAI</h1>
+          <button type="button" class="auth-google-btn">
+            <img src="https://i.postimg.cc/ZqbtygXF/1770598829500.png" alt="" class="auth-google-icon">
+            Sign in with Google
+          </button>
+          <div class="auth-divider">
+            <span class="auth-divider-text">OR</span>
+          </div>
+          <form class="auth-form" action="#" method="post" novalidate>
+            <label class="auth-label">
+              <span class="auth-label-text">Email</span>
+              <input type="email" class="auth-input" name="email" placeholder="you@example.com" autocomplete="email">
+            </label>
+            <label class="auth-label">
+              <span class="auth-label-text">Password</span>
+              <div class="auth-password-wrap">
+                <input type="password" class="auth-input auth-input-password" name="password" placeholder="••••••••" autocomplete="current-password">
+                <button type="button" class="auth-password-toggle" aria-label="Toggle password visibility">
+                  <span class="auth-password-toggle-icon auth-password-show" aria-hidden="true"></span>
+                  <span class="auth-password-toggle-icon auth-password-hide" aria-hidden="true" hidden></span>
+                </button>
+              </div>
+            </label>
+            <button type="submit" class="auth-submit-btn">Sign In</button>
+          </form>
+          <p class="auth-footer">
+            <a href="#" class="auth-footer-link" id="auth-modal-switch-to-signup">Sign up for free</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js?v=3"></script>
+</body>
+</html>

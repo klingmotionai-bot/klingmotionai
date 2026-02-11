@@ -1,16 +1,22 @@
 # Deploy on Railway
 
-## Important: Root Directory
+## Root Directory = `backend` (no need to change)
 
-**Set the service Root Directory to the repo root (leave empty or `.`).**
+The app now works when Railway’s **Root Directory** is set to **`backend`**:
 
-If Root Directory is set to `backend`, Railway builds only the `backend/` folder and uses Nixpacks with `npm ci`, which can fail. With Root Directory at the repo root, Railway uses the project **Dockerfile**, which runs `npm install` and avoids `npm ci` errors.
+- **`backend/Dockerfile`** runs `npm install` (no `npm ci`), so the build succeeds.
+- **`backend/public/`** contains the frontend (index.html, script.js, styles.css, etc.); the server serves it in production.
 
-## Steps
+You do **not** need to edit any file or clear Root Directory. Just **redeploy** (and clear build cache if Railway offers it).
 
-1. In Railway → your **klingmotionai** service → **Settings**.
-2. Under **Build**, set **Root Directory** to empty (or `.`).
-3. **Redeploy** (and clear build cache if available).
-4. Set variables: `SESSION_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` (if using OAuth).
+## If Root Directory is empty (repo root)
 
-The `railway.json` in this repo tells Railway to use the Dockerfile; the Root Directory must be the repo root for the Dockerfile to be found.
+Railway will use the root **Dockerfile** and build the whole repo. That also works.
+
+## Variables
+
+In Railway → **Variables**, set: `SESSION_SECRET`, and if you use OAuth: `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`.
+
+---
+
+**About “you must be on a branch”:** That message is from **GitHub** when editing a file in the repo (e.g. in the browser). You don’t need to edit any file; the code is already updated. Just push from your machine and redeploy on Railway.
