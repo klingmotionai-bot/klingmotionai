@@ -1,7 +1,6 @@
-# Railway/Nixpacks: use npm install so build never fails on package-lock sync (npm ci).
-# Start command is from Procfile only: web: node backend/server.js
+# Railway/Nixpacks: force npm install (no lock file = no npm ci). Procfile = start only.
 [phases.install]
-cmds = ["npm install --omit=dev"]
+cmds = ["npm install"]
 
 [phases.build]
 cmds = []
