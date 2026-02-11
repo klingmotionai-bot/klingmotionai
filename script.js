@@ -641,35 +641,43 @@ if (previewVideo) {
   previewVideo.play().catch(function () {});
 }
 
-var AUTH_MODAL_GOOGLE_URL = getBackendOrigin() + "/auth/google";
-
 function showAuthModal() {
   var modal = document.getElementById("auth-modal");
-  if (modal) {
-    modal.setAttribute("aria-hidden", "false");
-  }
+  var signupPanel = document.getElementById("auth-modal-signup-panel");
+  var signinPanel = document.getElementById("auth-modal-signin-panel");
+  if (modal) modal.setAttribute("aria-hidden", "false");
+  if (signupPanel) { signupPanel.hidden = false; }
+  if (signinPanel) { signinPanel.hidden = true; }
 }
 
 function hideAuthModal() {
   var modal = document.getElementById("auth-modal");
-  if (modal) {
-    modal.setAttribute("aria-hidden", "true");
-  }
+  if (modal) modal.setAttribute("aria-hidden", "true");
 }
 
 function initAuthModal() {
   var modal = document.getElementById("auth-modal");
+  if (!modal) return;
   var overlay = document.getElementById("auth-modal-overlay");
   var closeBtn = document.getElementById("auth-modal-close");
-  var googleBtn = document.getElementById("auth-modal-google");
-  var signinLink = document.getElementById("auth-modal-signin");
+  var switchToSignin = document.getElementById("auth-modal-switch-to-signin");
+  var switchToSignup = document.getElementById("auth-modal-switch-to-signup");
+  var signupPanel = document.getElementById("auth-modal-signup-panel");
+  var signinPanel = document.getElementById("auth-modal-signin-panel");
   if (overlay) overlay.addEventListener("click", hideAuthModal);
   if (closeBtn) closeBtn.addEventListener("click", hideAuthModal);
-  if (googleBtn) googleBtn.addEventListener("click", function () {
-    window.location.href = AUTH_MODAL_GOOGLE_URL;
+  modal.querySelectorAll(".auth-modal-logo").forEach(function (btn) {
+    btn.addEventListener("click", hideAuthModal);
   });
-  if (signinLink) signinLink.addEventListener("click", function () {
-    hideAuthModal();
+  if (switchToSignin) switchToSignin.addEventListener("click", function (e) {
+    e.preventDefault();
+    if (signupPanel) signupPanel.hidden = true;
+    if (signinPanel) signinPanel.hidden = false;
+  });
+  if (switchToSignup) switchToSignup.addEventListener("click", function (e) {
+    e.preventDefault();
+    if (signinPanel) signinPanel.hidden = true;
+    if (signupPanel) signupPanel.hidden = false;
   });
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && modal && modal.getAttribute("aria-hidden") === "false") {
@@ -856,7 +864,7 @@ if (btnCreate && btnCreateBurst && btnCreateLoader) {
     fetchAuthMe()
       .then(function (auth) {
         if (!auth || !auth.user) {
-          window.location.href = getBackendOrigin() + "/auth/google";
+          showAuthModal();
           return;
         }
         return apiFetch(API_BASE_URL + "/api/create-offer-token", {
@@ -866,7 +874,7 @@ if (btnCreate && btnCreateBurst && btnCreateLoader) {
           .then(function (r) { return r.json(); })
           .then(function (data) {
             if (!data || !data.token) {
-              window.location.href = getBackendOrigin() + "/auth/google";
+              showAuthModal();
               return;
             }
             if (typeof window.setOfferCompleteRedirectUrl === "function") {
@@ -876,7 +884,7 @@ if (btnCreate && btnCreateBurst && btnCreateLoader) {
           });
       })
       .catch(function () {
-        window.location.href = getBackendOrigin() + "/auth/google";
+        showAuthModal();
       });
   });
 }

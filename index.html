@@ -362,18 +362,82 @@
     </div>
   </div>
 
+  <!-- Auth modal: same sign up / sign in as menu pages, shown when user clicks Create without being logged in -->
   <div id="auth-modal" class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title" aria-hidden="true">
     <div class="auth-modal-overlay" id="auth-modal-overlay"></div>
-    <div class="auth-modal-box">
+    <div class="auth-modal-box auth-modal-box--card">
       <button type="button" class="auth-modal-close" id="auth-modal-close" aria-label="Close">&times;</button>
-      <h2 id="auth-modal-title" class="auth-modal-title">Sign in to continue</h2>
-      <p class="auth-modal-subtitle">Create videos with your account</p>
-      <div class="auth-modal-actions">
-        <button type="button" class="auth-modal-btn auth-modal-btn-google" id="auth-modal-google">
-          <img src="https://i.postimg.cc/ZqbtygXF/1770598829500.png" alt="" class="auth-modal-google-icon" width="20" height="20">
-          Continue with Google
-        </button>
-        <a href="?page=signin" class="auth-modal-btn auth-modal-btn-signin router-link" id="auth-modal-signin">Sign in</a>
+      <div id="auth-modal-signup-panel" class="auth-modal-panel">
+        <div class="auth-card">
+          <button type="button" class="auth-card-logo auth-modal-logo" id="auth-modal-logo" aria-label="Close">
+            <img src="klingmotionai_logo.png" alt="" class="auth-card-logo-img">
+            <span class="auth-card-logo-name">KlingMotionAI</span>
+          </button>
+          <h1 class="auth-card-title">Welcome to KlingMotionAI</h1>
+          <button type="button" class="auth-google-btn">
+            <img src="https://i.postimg.cc/ZqbtygXF/1770598829500.png" alt="" class="auth-google-icon">
+            Sign in with Google
+          </button>
+          <div class="auth-divider">
+            <span class="auth-divider-text">OR</span>
+          </div>
+          <form class="auth-form" action="#" method="post" novalidate>
+            <label class="auth-label">
+              <span class="auth-label-text">Email</span>
+              <input type="email" class="auth-input" name="email" placeholder="you@example.com" autocomplete="email">
+            </label>
+            <label class="auth-label">
+              <span class="auth-label-text">Password</span>
+              <div class="auth-password-wrap">
+                <input type="password" class="auth-input auth-input-password" name="password" placeholder="••••••••" autocomplete="new-password">
+                <button type="button" class="auth-password-toggle" aria-label="Toggle password visibility">
+                  <span class="auth-password-toggle-icon auth-password-show" aria-hidden="true"></span>
+                  <span class="auth-password-toggle-icon auth-password-hide" aria-hidden="true" hidden></span>
+                </button>
+              </div>
+            </label>
+            <button type="submit" class="auth-submit-btn">Sign Up</button>
+          </form>
+          <p class="auth-footer">
+            Already have an account? <a href="#" class="auth-footer-link" id="auth-modal-switch-to-signin">Sign in</a>
+          </p>
+        </div>
+      </div>
+      <div id="auth-modal-signin-panel" class="auth-modal-panel" hidden>
+        <div class="auth-card">
+          <button type="button" class="auth-card-logo auth-modal-logo" aria-label="Close">
+            <img src="klingmotionai_logo.png" alt="" class="auth-card-logo-img">
+            <span class="auth-card-logo-name">KlingMotionAI</span>
+          </button>
+          <h1 class="auth-card-title">Welcome back to KlingMotionAI</h1>
+          <button type="button" class="auth-google-btn">
+            <img src="https://i.postimg.cc/ZqbtygXF/1770598829500.png" alt="" class="auth-google-icon">
+            Sign in with Google
+          </button>
+          <div class="auth-divider">
+            <span class="auth-divider-text">OR</span>
+          </div>
+          <form class="auth-form" action="#" method="post" novalidate>
+            <label class="auth-label">
+              <span class="auth-label-text">Email</span>
+              <input type="email" class="auth-input" name="email" placeholder="you@example.com" autocomplete="email">
+            </label>
+            <label class="auth-label">
+              <span class="auth-label-text">Password</span>
+              <div class="auth-password-wrap">
+                <input type="password" class="auth-input auth-input-password" name="password" placeholder="••••••••" autocomplete="current-password">
+                <button type="button" class="auth-password-toggle" aria-label="Toggle password visibility">
+                  <span class="auth-password-toggle-icon auth-password-show" aria-hidden="true"></span>
+                  <span class="auth-password-toggle-icon auth-password-hide" aria-hidden="true" hidden></span>
+                </button>
+              </div>
+            </label>
+            <button type="submit" class="auth-submit-btn">Sign In</button>
+          </form>
+          <p class="auth-footer">
+            <a href="#" class="auth-footer-link" id="auth-modal-switch-to-signup">Sign up for free</a>
+          </p>
+        </div>
       </div>
     </div>
   </div>
