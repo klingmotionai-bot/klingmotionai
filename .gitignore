@@ -3,3 +3,4 @@ node_modules
 .env.*
 .DS_Store
 backend/.sessions
+RAILWAY_STEP_BY_STEP.md
