@@ -1,6 +1,10 @@
 node_modules
 .env
 .env.*
+dist
+build
 .DS_Store
+npm-debug.log
 backend/.sessions
-RAILWAY_STEP_BY_STEP.md
+backend/uploads/*
+!backend/uploads/.gitkeep

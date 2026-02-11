@@ -22,7 +22,7 @@ const app = express();
 
 /** In-memory store for CPA offer tokens. Key = token string, value = { userId, used, createdAt }. */
 const offerTokens = new Map();
-const PORT = process.env.PORT || 3080;
+const PORT = process.env.PORT || 3000;
 const UPLOAD_DIR = path.join(__dirname, "uploads");
 const MAX_FILE_SIZE = 100 * 1024 * 1024;
 /** When serving frontend: production (e.g. Railway with root=backend) uses backend/public; else repo root (..). */

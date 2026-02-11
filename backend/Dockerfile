@@ -1,14 +1,6 @@
-# When Railway Root Directory = backend, this Dockerfile is used. Uses npm install (no npm ci).
-FROM node:20-alpine
-
+FROM node:18
 WORKDIR /app
-
-COPY package.json ./
-RUN npm install --omit=dev
-
+COPY package*.json ./
+RUN npm install
 COPY . .
-
-ENV NODE_ENV=production
-EXPOSE 8080
-
-CMD ["node", "server.js"]
+CMD ["npm","start"]
