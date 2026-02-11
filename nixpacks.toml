@@ -1,6 +1,5 @@
-# Railway/Nixpacks: force npm install (no lock file = no npm ci). Procfile = start only.
 [phases.install]
 cmds = ["npm install"]
 
-[phases.build]
-cmds = []
+[start]
+cmd = "node backend/server.js"
