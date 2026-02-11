@@ -9,7 +9,7 @@ process.on("unhandledRejection", function (reason, p) {
 const path = require("path");
 const fs = require("fs");
 const crypto = require("crypto");
-require("dotenv").config({ path: path.join(__dirname, ".env") });
+require("dotenv").config({ path: path.join(__dirname, ".env"), quiet: process.env.NODE_ENV === "production" });
 console.log("[server] env loaded");
 const express = require("express");
 const cors = require("cors");
