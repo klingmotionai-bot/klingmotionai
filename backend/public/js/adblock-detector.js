@@ -37,21 +37,20 @@
     window.location.reload();
   }
 
-  /** Single check: fetch adsbygoogle.js. Blocked = reject or tiny/invalid response. */
+  /** Use no-cors fetch: only check if request succeeds. Avoids CORS false positives. */
   function checkAdblockAsync() {
     return new Promise(function (resolve) {
+      var done = false;
+      function finish(blocked) {
+        if (done) return;
+        done = true;
+        resolve(blocked);
+      }
       var url = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?t=" + Date.now();
-      fetch(url, { method: "GET", cache: "no-store", credentials: "omit" })
-        .then(function (res) {
-          return res.text();
-        })
-        .then(function (text) {
-          var blocked = text.length < 1000 || text.indexOf("adsbygoogle") === -1;
-          resolve(blocked);
-        })
-        .catch(function () {
-          resolve(true);
-        });
+      fetch(url, { method: "GET", mode: "no-cors", cache: "no-store", credentials: "omit" })
+        .then(function () { finish(false); })
+        .catch(function () { finish(true); });
+      setTimeout(function () { finish(false); }, 6000);
     });
   }
 

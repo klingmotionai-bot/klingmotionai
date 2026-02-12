@@ -434,8 +434,10 @@ var previewArea = document.getElementById("preview-area");
 var previewVideo = document.getElementById("preview-video");
 var recordingLabel = document.getElementById("recording-label");
 
-var EXAMPLE_CHARACTER_URL = "/example_character.jpg";
-var EXAMPLE_MOTION_URL = "/example_motion.mp4";
+function getExampleAssetUrl(path) {
+  return (typeof window !== "undefined" && window.location && window.location.origin
+    ? window.location.origin : "") + path;
+}
 
 var characterObjectURL = null;
 var videoObjectURL = null;
@@ -465,11 +467,11 @@ if (btnTryExample && characterPreview && characterLabel && previewVideo) {
     stopCameraStream();
     revokeCharacterURL();
     revokeVideoURL();
-    characterPreview.src = EXAMPLE_CHARACTER_URL;
+    characterPreview.src = getExampleAssetUrl("/example_character.jpg");
     characterPreview.alt = "Selected motion visual";
     characterLabel.textContent = "Change Motion Visual";
     previewVideo.srcObject = null;
-    previewVideo.src = EXAMPLE_MOTION_URL;
+    previewVideo.src = getExampleAssetUrl("/example_motion.mp4");
     previewVideo.muted = true;
     previewVideo.loop = true;
     previewVideo.playsInline = true;
