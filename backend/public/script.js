@@ -434,12 +434,8 @@ var previewArea = document.getElementById("preview-area");
 var previewVideo = document.getElementById("preview-video");
 var recordingLabel = document.getElementById("recording-label");
 
-function getExampleCharacterUrl() {
-  return (typeof window !== "undefined" && window.location && window.location.origin || "") + "/example_character.jpg";
-}
-function getExampleMotionUrl() {
-  return (typeof window !== "undefined" && window.location && window.location.origin || "") + "/example_motion.mp4";
-}
+var EXAMPLE_CHARACTER_URL = "/example_character.jpg";
+var EXAMPLE_MOTION_URL = "/example_motion.mp4";
 
 var characterObjectURL = null;
 var videoObjectURL = null;
@@ -469,11 +465,11 @@ if (btnTryExample && characterPreview && characterLabel && previewVideo) {
     stopCameraStream();
     revokeCharacterURL();
     revokeVideoURL();
-    characterPreview.src = getExampleCharacterUrl();
+    characterPreview.src = EXAMPLE_CHARACTER_URL;
     characterPreview.alt = "Selected motion visual";
     characterLabel.textContent = "Change Motion Visual";
     previewVideo.srcObject = null;
-    previewVideo.src = getExampleMotionUrl();
+    previewVideo.src = EXAMPLE_MOTION_URL;
     previewVideo.muted = true;
     previewVideo.loop = true;
     previewVideo.playsInline = true;
