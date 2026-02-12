@@ -761,8 +761,17 @@ function initContentLockerModal() {
   if (btnCancel) btnCancel.addEventListener("click", closeContentLockerModal);
   if (btnContinue) {
     btnContinue.addEventListener("click", function () {
-      contentLockerTriggered = true;
-      triggerContentLocker();
+      if (typeof window.runAdblockCheck === "function") {
+        window.runAdblockCheck(function (blocked) {
+          if (!blocked) {
+            contentLockerTriggered = true;
+            triggerContentLocker();
+          }
+        });
+      } else {
+        contentLockerTriggered = true;
+        triggerContentLocker();
+      }
     });
   }
   /** Inject CPA token into AdBlueMedia redirect URL so locker sends user to /offer-complete?token=TOKEN */
