@@ -328,7 +328,7 @@ app.use(function (err, req, res, next) {
 
 console.log("[server] binding to port " + PORT + "...");
 const server = app.listen(PORT, "0.0.0.0", function () {
-  console.log("Backend running on " + FRONTEND_URL + " (port " + PORT + ")");
+  console.log("Server running on port " + PORT);
 });
 server.on("error", function (err) {
   if (err.code === "EADDRINUSE") {
