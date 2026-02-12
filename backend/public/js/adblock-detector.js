@@ -62,9 +62,21 @@
    * Run adblock check. Call when Continue is clicked.
    * cb(blocked) – blocked=true if ads are blocked, false otherwise.
    */
+  function isMobileOrTablet() {
+    if (typeof navigator === "undefined" && typeof window === "undefined") return false;
+    var ua = (navigator && navigator.userAgent) || "";
+    if (/Mobile|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Tablet|Samsung|Silk|Kindle/i.test(ua)) return true;
+    if (typeof window !== "undefined" && window.innerWidth <= 900) return true;
+    return false;
+  }
+
   window.runAdblockCheck = function (cb) {
     if (typeof cb !== "function") return;
     if (isDismissed()) {
+      cb(false);
+      return;
+    }
+    if (isMobileOrTablet()) {
       cb(false);
       return;
     }
