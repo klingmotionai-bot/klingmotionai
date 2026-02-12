@@ -9,7 +9,9 @@ process.on("unhandledRejection", function (reason, p) {
 const path = require("path");
 const fs = require("fs");
 const crypto = require("crypto");
-require("dotenv").config({ path: path.join(__dirname, ".env"), quiet: process.env.NODE_ENV === "production" });
+try {
+  require("dotenv").config({ path: path.join(__dirname, ".env"), quiet: true });
+} catch (e) { /* .env optional in production */ }
 console.log("[server] env loaded");
 const express = require("express");
 const cors = require("cors");
@@ -37,6 +39,7 @@ const FRONTEND_ROOT = process.env.NODE_ENV === "production"
 var FRONTEND_URL = process.env.FRONTEND_URL;
 if (!FRONTEND_URL && process.env.RAILWAY_STATIC_URL) FRONTEND_URL = process.env.RAILWAY_STATIC_URL;
 if (!FRONTEND_URL && process.env.RAILWAY_PUBLIC_DOMAIN) FRONTEND_URL = "https://" + process.env.RAILWAY_PUBLIC_DOMAIN;
+if (!FRONTEND_URL && process.env.RAILWAY_URL) FRONTEND_URL = process.env.RAILWAY_URL;
 if (!FRONTEND_URL) FRONTEND_URL = process.env.NODE_ENV === "production" ? "https://klingmotionai.com" : "http://localhost:" + PORT;
 const IS_PRODUCTION = process.env.NODE_ENV === "production";
 console.log("[server] PORT=" + PORT + " FRONTEND_URL=" + FRONTEND_URL);

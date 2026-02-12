@@ -1,6 +1,8 @@
-FROM node:18
+FROM node:18-alpine
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
+ENV NODE_ENV=production
+COPY package.json package-lock.json ./
+RUN npm install --omit=dev
 COPY . .
-CMD ["npm","start"]
+EXPOSE 3000
+CMD ["node", "server.js"]
