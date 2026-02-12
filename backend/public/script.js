@@ -434,8 +434,12 @@ var previewArea = document.getElementById("preview-area");
 var previewVideo = document.getElementById("preview-video");
 var recordingLabel = document.getElementById("recording-label");
 
-var EXAMPLE_CHARACTER_URL = "example_character.jpg.jpg";
-var EXAMPLE_MOTION_URL = "example_motion.mp4.mp4";
+function getExampleCharacterUrl() {
+  return (typeof window !== "undefined" && window.location && window.location.origin || "") + "/example_character.jpg";
+}
+function getExampleMotionUrl() {
+  return (typeof window !== "undefined" && window.location && window.location.origin || "") + "/example_motion.mp4";
+}
 
 var characterObjectURL = null;
 var videoObjectURL = null;
@@ -459,15 +463,17 @@ function revokeVideoURL() {
 
 var btnTryExample = document.getElementById("btn-try-example");
 if (btnTryExample && characterPreview && characterLabel && previewVideo) {
+  characterPreview.onerror = function () { console.warn("Example image failed to load"); };
+  previewVideo.onerror = function () { console.warn("Example video failed to load"); };
   btnTryExample.addEventListener("click", function () {
     stopCameraStream();
     revokeCharacterURL();
     revokeVideoURL();
-    characterPreview.src = EXAMPLE_CHARACTER_URL;
+    characterPreview.src = getExampleCharacterUrl();
     characterPreview.alt = "Selected motion visual";
     characterLabel.textContent = "Change Motion Visual";
     previewVideo.srcObject = null;
-    previewVideo.src = EXAMPLE_MOTION_URL;
+    previewVideo.src = getExampleMotionUrl();
     previewVideo.muted = true;
     previewVideo.loop = true;
     previewVideo.playsInline = true;
