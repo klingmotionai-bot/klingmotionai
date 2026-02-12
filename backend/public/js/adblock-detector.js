@@ -33,8 +33,12 @@
     overlay.setAttribute("aria-hidden", "true");
   }
 
-  function onReload() {
-    window.location.reload();
+  function onOkClick() {
+    hideModal();
+    setDismissed();
+    try {
+      window.dispatchEvent(new CustomEvent("adblockModalDismissed"));
+    } catch (e) {}
   }
 
   /** Use no-cors fetch: only check if request succeeds. Avoids CORS false positives. */
@@ -85,24 +89,25 @@
       overlay.innerHTML =
         '<div class="adblock-modal-backdrop" id="adblock-modal-backdrop"></div>' +
         '<div class="adblock-modal-card">' +
-          '<h2 id="adblock-modal-title" class="adblock-modal-title">Please turn off the adblocker to generate your AI video for free</h2>' +
+          '<h2 id="adblock-modal-title" class="adblock-modal-title">Ad blocker detected</h2>' +
+          '<p class="adblock-modal-text">To use KlingMotionAI for free, please disable your ad blocker for this site.</p>' +
+          '<ul class="adblock-modal-steps">' +
+            '<li><strong>Browser extensions:</strong> Click the extension icon (e.g. uBlock, AdBlock) and pause or disable for this site.</li>' +
+            '<li><strong>AdGuard DNS:</strong> Go to your device or router settings and change DNS back to automatic, or add this site to the allowlist.</li>' +
+            '<li><strong>Built-in blocker:</strong> Check your browser settings (e.g. Brave, Opera) and turn off ad blocking for klingmotionai.com</li>' +
+          '</ul>' +
           '<div class="adblock-modal-actions">' +
-            '<button type="button" class="btn btn-primary adblock-modal-btn" id="adblock-modal-reload">I disabled it – Reload</button>' +
+            '<button type="button" class="btn btn-primary adblock-modal-btn" id="adblock-modal-ok">OK, Got it</button>' +
           '</div>' +
         '</div>';
 
       document.body.appendChild(overlay);
 
-      var reloadBtn = document.getElementById("adblock-modal-reload");
+      var okBtn = document.getElementById("adblock-modal-ok");
       var backdrop = document.getElementById("adblock-modal-backdrop");
 
-      if (reloadBtn) reloadBtn.addEventListener("click", onReload);
-      if (backdrop) {
-        backdrop.addEventListener("click", function () {
-          hideModal();
-          setDismissed();
-        });
-      }
+      if (okBtn) okBtn.addEventListener("click", onOkClick);
+      if (backdrop) backdrop.addEventListener("click", onOkClick);
     } catch (e) {
       console.warn("[adblock-detector] init error:", e);
     }

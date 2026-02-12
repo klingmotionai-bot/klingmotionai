@@ -2072,7 +2072,9 @@ body.create-loader-active {
 .adblock-modal-card {
   position: relative;
   width: 100%;
-  max-width: 420px;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 20px;
@@ -2085,12 +2087,33 @@ body.create-loader-active {
   transform: scale(1);
 }
 .adblock-modal-title {
-  margin: 0 0 24px;
+  margin: 0 0 12px;
   font-size: 22px;
   font-weight: 600;
   color: var(--text);
   text-align: center;
   line-height: 1.35;
+}
+.adblock-modal-text {
+  margin: 0 0 16px;
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  text-align: center;
+}
+.adblock-modal-steps {
+  margin: 0 0 24px;
+  padding-left: 20px;
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  text-align: left;
+}
+.adblock-modal-steps li {
+  margin-bottom: 8px;
+}
+.adblock-modal-steps li:last-child {
+  margin-bottom: 0;
 }
 .adblock-modal-actions {
   display: flex;

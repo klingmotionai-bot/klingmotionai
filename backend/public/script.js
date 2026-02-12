@@ -761,6 +761,10 @@ function initContentLockerModal() {
 
   if (backdrop) backdrop.addEventListener("click", closeContentLockerModal);
   if (btnCancel) btnCancel.addEventListener("click", closeContentLockerModal);
+  window.addEventListener("adblockModalDismissed", function () {
+    contentLockerTriggered = false;
+    closeContentLockerModal();
+  });
   if (btnContinue) {
     btnContinue.addEventListener("click", function () {
       if (typeof window.runAdblockCheck === "function") {
