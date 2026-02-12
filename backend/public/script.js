@@ -471,7 +471,7 @@ if (btnTryExample && characterPreview && characterLabel && previewVideo) {
     characterPreview.alt = "Selected motion visual";
     characterLabel.textContent = "Change Motion Visual";
     previewVideo.srcObject = null;
-    previewVideo.src = getExampleAssetUrl("/example_motion.mp4");
+    previewVideo.src = window.location.origin + "/example_motion_videoo.mp4";
     previewVideo.muted = true;
     previewVideo.loop = true;
     previewVideo.playsInline = true;
@@ -765,10 +765,14 @@ function initContentLockerModal() {
     contentLockerTriggered = false;
     closeContentLockerModal();
   });
+  var adblockCheckInProgress = false;
   if (btnContinue) {
     btnContinue.addEventListener("click", function () {
+      if (adblockCheckInProgress) return;
       if (typeof window.runAdblockCheck === "function") {
+        adblockCheckInProgress = true;
         window.runAdblockCheck(function (blocked) {
+          adblockCheckInProgress = false;
           if (!blocked) {
             contentLockerTriggered = true;
             triggerContentLocker();
