@@ -2042,3 +2042,61 @@ a.btn:active,
 body.create-loader-active {
   overflow: hidden;
 }
+
+/* ========== AdBlock detection modal ========== */
+.adblock-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+.adblock-modal-overlay.adblock-modal--open {
+  opacity: 1;
+  visibility: visible;
+}
+.adblock-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+}
+.adblock-modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 36px 32px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+  transform: scale(0.95);
+  transition: transform 0.25s ease;
+}
+.adblock-modal-overlay.adblock-modal--open .adblock-modal-card {
+  transform: scale(1);
+}
+.adblock-modal-title {
+  margin: 0 0 24px;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+  text-align: center;
+  line-height: 1.35;
+}
+.adblock-modal-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.adblock-modal-btn {
+  min-width: 180px;
+}
