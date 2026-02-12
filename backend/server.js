@@ -24,13 +24,11 @@ const app = express();
 
 /** In-memory store for CPA offer tokens. Key = token string, value = { userId, used, createdAt }. */
 const offerTokens = new Map();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3080;
 const UPLOAD_DIR = path.join(__dirname, "uploads");
 const MAX_FILE_SIZE = 100 * 1024 * 1024;
-/** When serving frontend: production (e.g. Railway with root=backend) uses backend/public; else repo root (..). */
-const FRONTEND_ROOT = process.env.NODE_ENV === "production"
-  ? path.join(__dirname, "public")
-  : path.join(__dirname, "..");
+/** When serving frontend: always use backend/public (single source of truth for dev and prod). */
+const FRONTEND_ROOT = path.join(__dirname, "public");
 /**
  * Public URL of the app. Set via FRONTEND_URL, or on Railway use RAILWAY_STATIC_URL / RAILWAY_PUBLIC_DOMAIN, or:
  * - NODE_ENV !== "production" → http://localhost:PORT
