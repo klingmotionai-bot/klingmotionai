@@ -2051,7 +2051,7 @@ body.create-loader-active {
 
 /* Motion preview GIF (Try Example) */
 .motion-preview-gif {
-  width: 100%;
+  max-width: 100%;
   max-height: 320px;
   object-fit: contain;
   display: block;
