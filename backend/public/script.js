@@ -459,10 +459,12 @@ function revokeVideoURL() {
   }
 }
 
+var previewGif = document.getElementById("preview-gif");
 var btnTryExample = document.getElementById("btn-try-example");
 if (btnTryExample && characterPreview && characterLabel && previewVideo) {
   characterPreview.onerror = function () { console.warn("Example image failed to load"); };
   previewVideo.onerror = function () { console.warn("Example video failed to load"); };
+  if (previewGif) previewGif.onerror = function () { console.warn("Example gif failed to load"); };
   btnTryExample.addEventListener("click", function () {
     stopCameraStream();
     revokeCharacterURL();
@@ -471,11 +473,12 @@ if (btnTryExample && characterPreview && characterLabel && previewVideo) {
     characterPreview.alt = "Selected motion visual";
     characterLabel.textContent = "Change Motion Visual";
     previewVideo.srcObject = null;
-    previewVideo.src = window.location.origin + "/example_motion_videoo.mp4";
-    previewVideo.muted = true;
-    previewVideo.loop = true;
-    previewVideo.playsInline = true;
-    previewVideo.play().catch(function () {});
+    previewVideo.src = "";
+    previewVideo.hidden = true;
+    if (previewGif) {
+      previewGif.src = window.location.origin + "/motion_video_example.gif";
+      previewGif.hidden = false;
+    }
     setUploadState("character", UPLOAD_STATES.SUCCESS);
     setUploadState("video", UPLOAD_STATES.SUCCESS);
   });
@@ -530,6 +533,8 @@ if (btnSelectVideo && inputVideo && previewVideo) {
     setUploadState("video", UPLOAD_STATES.IDLE);
     stopCameraStream();
     revokeVideoURL();
+    if (previewGif) { previewGif.hidden = true; previewGif.src = ""; }
+    previewVideo.hidden = false;
     videoObjectURL = URL.createObjectURL(file);
     previewVideo.src = videoObjectURL;
     previewVideo.srcObject = null;
@@ -579,6 +584,8 @@ if (btnRecordVideo && previewVideo && previewArea) {
       return;
     }
     if (mediaStream) return;
+    if (previewGif) { previewGif.hidden = true; previewGif.src = ""; }
+    previewVideo.hidden = false;
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: true })
       .then(function (stream) {
