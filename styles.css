@@ -2052,11 +2052,7 @@ body.create-loader-active {
 /* Motion preview GIF (Try Example) */
 .motion-preview-gif {
   width: 100%;
-  max-width: 520px;
   max-height: 320px;
-  min-height: 240px;
-  border-radius: 16px;
   object-fit: contain;
   display: block;
-  margin: 0 auto;
 }
