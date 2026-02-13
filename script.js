@@ -457,6 +457,7 @@ function revokeVideoURL() {
   }
 }
 
+var previewGif = document.getElementById("preview-gif");
 var btnTryExample = document.getElementById("btn-try-example");
 if (btnTryExample && characterPreview && characterLabel && previewVideo) {
   btnTryExample.addEventListener("click", function () {
@@ -467,11 +468,12 @@ if (btnTryExample && characterPreview && characterLabel && previewVideo) {
     characterPreview.alt = "Selected motion visual";
     characterLabel.textContent = "Change Motion Visual";
     previewVideo.srcObject = null;
-    previewVideo.src = EXAMPLE_MOTION_URL;
-    previewVideo.muted = true;
-    previewVideo.loop = true;
-    previewVideo.playsInline = true;
-    previewVideo.play().catch(function () {});
+    previewVideo.src = "";
+    previewVideo.hidden = true;
+    if (previewGif) {
+      previewGif.src = "/motion_video_example.gif";
+      previewGif.hidden = false;
+    }
     setUploadState("character", UPLOAD_STATES.SUCCESS);
     setUploadState("video", UPLOAD_STATES.SUCCESS);
   });
