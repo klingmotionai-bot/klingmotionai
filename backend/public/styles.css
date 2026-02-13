@@ -1110,6 +1110,15 @@ a.btn:active,
   display: block;
 }
 
+.motion-preview-gif {
+  width: 100%;
+  max-width: 520px;
+  border-radius: 16px;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+}
+
 .card-actions {
   display: flex;
   gap: 12px;

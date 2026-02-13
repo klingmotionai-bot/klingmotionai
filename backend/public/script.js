@@ -476,7 +476,7 @@ if (btnTryExample && characterPreview && characterLabel && previewVideo) {
     previewVideo.src = "";
     previewVideo.hidden = true;
     if (previewGif) {
-      previewGif.src = window.location.origin + "/motion_video_example.gif";
+      previewGif.src = "/motion_video_example.gif";
       previewGif.hidden = false;
     }
     setUploadState("character", UPLOAD_STATES.SUCCESS);
